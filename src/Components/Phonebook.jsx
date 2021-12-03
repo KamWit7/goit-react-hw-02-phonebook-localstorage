@@ -55,13 +55,21 @@ export class Phonebook extends React.Component {
     })
   }
 
+  saveContactsInLocalStorage = () => {
+    localStorage.setItem("contacts", JSON.stringify(this.state.contacts))
+  }
+
   componentDidMount() {
+    // if (this.state.name === "") return
     let storageContacts = localStorage.getItem("contacts")
-    this.setState({ contacts: JSON.parse(storageContacts) })
+
+    storageContacts
+      ? this.setState({ contacts: JSON.parse(storageContacts) })
+      : this.saveContactsInLocalStorage()
   }
 
   componentDidUpdate() {
-    localStorage.setItem("contacts", JSON.stringify(this.state.contacts))
+    this.saveContactsInLocalStorage()
   }
 
   render() {
